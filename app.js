@@ -29,11 +29,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const teacherRoutes = require('./routes/teacherRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const authRoutes = require('./routes/authRoutes');
+const parentRoutes = require('./routes/parentRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 
 app.use('/teacher', teacherRoutes);
 app.use('/student', studentRoutes);
 app.use('/auth', authRoutes);
+app.use('/parent', parentRoutes); 
 app.use('/protected', protectedRoutes);
 
 // Start the server

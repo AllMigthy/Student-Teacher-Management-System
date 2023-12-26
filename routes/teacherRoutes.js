@@ -7,7 +7,7 @@ const { authenticateTeacher } = require('../middleware/authMiddleware');
 
 router.post('/createClass',authenticateTeacher, teacherController.createClass);
 router.post('/addAssignment',authenticateTeacher, teacherController.addAssignment);
-router.post('/addStudentToClass',authenticateTeacher, teacherController.addStudentToClass);
+router.post('/addStudentsToClass',authenticateTeacher, teacherController.addStudentsToClass);
 router.get('/viewClasses',authenticateTeacher, teacherController.viewClasses);
 router.get('/viewAssignments/:classId',authenticateTeacher, teacherController.viewAssignments);
 router.post('/searchStudents', authenticateTeacher, teacherController.searchStudents);

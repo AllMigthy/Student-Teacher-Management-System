@@ -80,23 +80,36 @@ exports.addAssignment = async (req, res) => {
     }
 };
 
-exports.addStudentToClass = async (req, res) => {
+exports.addStudentsToClass = async (req, res) => {
     try {
-        const { classId, studentName } = req.body;
+        const { classId, studentNames } = req.body;
+
+        // Find the target class
         const targetClass = await Class.findById(classId);
 
         if (!targetClass) {
             return res.status(404).json({ error: 'Class not found' });
         }
 
-        const student = await Student.findOne({ name: studentName });
+        // Find the students
+        const students = await Student.find({ name: { $in: studentNames } });
 
-        if (!student) {
-            return res.status(404).json({ error: 'Student not found' });
+        if (!students || students.length === 0) {
+            return res.status(404).json({ error: 'Students not found' });
         }
 
-        targetClass.students.push(student);
+        // Filter out already existing students in the class
+        const newStudents = students.filter(student => !targetClass.students.includes(student._id));
+
+        // Add the new students to the class
+        targetClass.students.push(...newStudents);
         await targetClass.save();
+
+        // Update the class reference in each new student document
+        for (const newStudent of newStudents) {
+            newStudent.classes.push(targetClass._id);
+            await newStudent.save();
+        }
 
         res.json(targetClass);
     } catch (error) {
@@ -104,6 +117,7 @@ exports.addStudentToClass = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 exports.viewClasses = async (req, res) => {
     try {

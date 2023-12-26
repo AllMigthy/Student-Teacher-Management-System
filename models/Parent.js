@@ -1,39 +1,31 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const studentSchema = new mongoose.Schema({
+const parentSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
     },
-    semester: String,
-    rollNo: String,
-    branch: String,
     email: {
         type: String,
         required: true,
         unique: true,
+        lowercase: true,
     },
     password: {
         type: String,
         required: true,
         select: false,
     },
-    parents: [
+    students: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Parent',
+            ref: 'Student',
         },
     ],
-    classes: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Class',
-        },
-    ]
 });
 
-studentSchema.methods.comparePassword = async function (enteredPassword) {
+parentSchema.methods.comparePassword = async function (enteredPassword) {
     try {
         const isMatch = await bcrypt.compare(enteredPassword, this.password);
         return isMatch;
@@ -42,7 +34,7 @@ studentSchema.methods.comparePassword = async function (enteredPassword) {
     }
 };
 
-studentSchema.pre('save', async function (next) {
+parentSchema.pre('save', async function (next) {
     try {
         if (!this.isModified('password')) return next();
 
@@ -54,6 +46,6 @@ studentSchema.pre('save', async function (next) {
     }
 });
 
-const Student = mongoose.model('Student', studentSchema);
+const Parent = mongoose.model('Parent', parentSchema);
 
-module.exports = Student;
+module.exports = Parent;

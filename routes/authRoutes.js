@@ -8,5 +8,8 @@ router.post('/registerStudent', authController.registerStudent);
 router.post('/loginStudent', authController.loginStudent);
 router.post('/logoutTeacher', authController.logoutTeacher);
 router.post('/logoutStudent', authController.logoutStudent);
+router.post('/registerParent', authController.registerParent);
+router.post('/loginParent', authController.loginParent);
+
 
 module.exports = router;
