@@ -13,5 +13,8 @@ router.get('/viewAssignments/:classId',authenticateTeacher, teacherController.vi
 router.post('/searchStudents', authenticateTeacher, teacherController.searchStudents);
 router.post('/addAnnouncement', authenticateTeacher, announcementController.addAnnouncement);
 router.get('/viewAnnouncements/:classId', authenticateTeacher, announcementController.viewAnnouncements);
+router.post('/linkSpreadsheetToClass', authenticateTeacher, teacherController.linkSpreadsheetToClass);
+router.get('/viewCampaigns', authenticateTeacher, teacherController.viewCampaigns);
+router.post('/removeStudentFromClass', authenticateTeacher, teacherController.removeStudentFromClass);
 
 module.exports = router;

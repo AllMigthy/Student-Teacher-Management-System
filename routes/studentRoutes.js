@@ -8,5 +8,7 @@ router.get('/viewAssignments/:classId', authenticateStudent, studentController.v
 router.post('/submitAssignment', authenticateStudent, studentController.submitAssignment);
 router.patch('/updateInfo', authenticateStudent, studentController.updateStudentInfo);
 router.get('/viewAnnouncements/:classId', authenticateStudent, announcementController.viewAnnouncements);
+router.get('/viewAttendance/:classId/:studentId', authenticateStudent, studentController.viewAttendance);
+router.post('/leaveClass', authenticateStudent, studentController.leaveClass);
 
 module.exports = router;

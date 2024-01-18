@@ -33,6 +33,7 @@ const classSchema = new mongoose.Schema({
             ref: 'Announcement',
         },
     ],
+    spreadsheetLink: String,
 });
 
 const Class = mongoose.model('Class', classSchema);
